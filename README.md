@@ -8,107 +8,102 @@ University of Colorado Boulder
 
 ## Abstract
 
-This report presents an implementation of the Stable Sparse RRT* (SST*) algorithm for planning dynamically feasible trajectories of a glider in both two-dimensional and three dimensional environments. In the two-dimensional analysis, the methodology incorporates obstacles and wind disturbances, analyzes a variety of cost functions, and then evaluates SST* performance without explicit goal sampling.The three-dimensional analysis will focus on a more detailed examination of cost functions and evaluation of the optimality of the SST*. The results show the adaptability of SST* in diferent spatial dimensions,from the ability to optimize glide range to maintaining trajectory stability without explicit goal-directed strategies. This comprehensive approach expands the sphere of applicability and efciency of SST* in complex planning problems.
+This report presents an implementation of the Stable Sparse RRT* (SST*) algorithm for planning dynamically feasible trajectories of a glider in both two-dimensional and three-dimensional environments. In the two-dimensional analysis, the methodology incorporates obstacles and wind disturbances, analyzes a variety of cost functions, and then evaluates SST* performance without explicit goal sampling. The three-dimensional analysis will focus on a more detailed examination of cost functions and evaluation of the optimality of the SST*. The results show the adaptability of SST* in different spatial dimensions, from the ability to optimize glide range to maintaining trajectory stability without explicit goal-directed strategies. This comprehensive approach expands the sphere of applicability and efficiency of SST* in complex planning problems.
 
 ## 1 Introduction
 
-Autonomous planning for unmanned gliders is challenging due to complex aerodynamic conditions, wind disturbances, high dimensional state space, and environmental constraints.Sampling-based motion planners like RRT have found success in such problems, but variants such as Stable Sparse RRT* (SST*) ofer improved asymptotic optimality and sparser tree representations, leading to more efcient exploration and solution refnement.
+Autonomous planning for unmanned gliders is challenging due to complex aerodynamic conditions, wind disturbances, high dimensional state space, and environmental constraints. Sampling-based motion planners like RRT have found success in such problems, but variants such as Stable Sparse RRT* (SST*) offer improved asymptotic optimality and sparser tree representations, leading to more efficient exploration and solution refinement.
 
-This project focuses exclusively on SST* and its performance under diferent planning objectives within both two-dimensional and three-dimensional environments. In the two dimensional case, I incorporate obstacles and wind disturbances to simulate realistic fight conditions, analyze various cost functions, and evaluate SST* performance without relying on explicit goal sampling.This approach demonstrates how SST* can achieve desired behaviors, such as maximizing glide range and avoiding obstacles, solely through cost-based guidance.
+This project focuses exclusively on SST* and its performance under different planning objectives within both two-dimensional and three-dimensional environments. In the two-dimensional case, I incorporate obstacles and wind disturbances to simulate realistic flight conditions, analyze various cost functions, and evaluate SST* performance without relying on explicit goal sampling. This approach demonstrates how SST* can achieve desired behaviors, such as maximizing glide range and avoiding obstacles, solely through cost-based guidance. 
 
-In the three-dimensional analysis, the study extends to a more complex spatial domain,where I analyze cost functions and assess the asymptotic optimality of SST*. By show ing the two-dimensional and three-dimensional cases, this project reveals how SST* adapts to varying spatial complexities and maintains optimal performance across diferent dimen sional contexts. The comprehensive evaluation underscores the planner’s versatility and efectiveness in diverse planning scenarios.
+In the three-dimensional analysis, the study extends to a more complex spatial domain, where I analyze cost functions and assess the asymptotic optimality of SST*. By showing the two-dimensional and three-dimensional cases, this project reveals how SST* adapts to varying spatial complexities and maintains optimal performance across different dimensional contexts. The comprehensive evaluation underscores the planner's versatility and effectiveness in diverse planning scenarios.
 
 ## 2 Problem Description
 
-This study investigates the application of the Stable Sparse RRT* (SST*) algorithm for planning dynamically feasible trajectories of a glider in both two-dimensional (2D) and three-dimensional (3D) environments.The problem is approached through two distinct scenarios, each with its unique set of objectives and constraints.
+This study investigates the application of the Stable Sparse RRT* (SST*) algorithm for planning dynamically feasible trajectories of a glider in both two-dimensional (2D) and three-dimensional (3D) environments. The problem is approached through two distinct scenarios, each with its unique set of objectives and constraints.
 
 Consider a glider navigating a three-dimensional environment. The state of the glider is represented by a 12-dimensional vector:
 
 [x,y,z,φ,θ,ψ,u,v,w,p,q,r]
 
-In the two-dimensional case, the glider navigates within a planar environment (x-z plane)and its control space is restricted to elevator defection. Due to the nature of the aircraft’s dynamics, this choice of control space will only afect the glider longitudinally, efectively simplifying the dynamics at hand.
+In the two-dimensional case, the glider navigates within a planar environment (x-z plane) and its control space is restricted to elevator deflection. Due to the nature of the aircraft's dynamics, this choice of control space will only affect the glider longitudinally, effectively simplifying the dynamics at hand.
 
-SST* is evaluated in scenarios where explicit goal sampling is disabled. Instead of rely ing on predefned goal states, the planner utilizes cost functions to autonomously discover optimal trajectories that maximize glide range and maintain stability.
+SST* is evaluated in scenarios where explicit goal sampling is disabled. Instead of relying on predefined goal states, the planner utilizes cost functions to autonomously discover optimal trajectories that maximize glide range and maintain stability.
 
-In the three-dimensional case, the glider navigates within a bounded space defned by the x, y, and z axes and its control space is composed of aileron, rudder and elevator defections.
+In the three-dimensional case, the glider navigates within a bounded space defined by the \(x\), \(y\), and \(z\) axes and its control space is composed of aileron, rudder and elevator deflections.
 
-To assess the asymptotic optimality of SST* in three dimensions, a series of experiments are conducted where the algorithm’s parameters are systematically varied, and the number of iterations is increased. By reducing the pruning thresholds and allowing more iterations,SST* is observed to converge toward optimal trajectories in terms of path length and adherence to cost objectives. This evaluation confrms SST$^ { 米 } S$ability to approach optimal solutions as computational resources and planning horizons are extended.
+To assess the asymptotic optimality of SST* in three dimensions, a series of experiments are conducted where the algorithm's parameters are systematically varied, and the number of iterations is increased. By reducing the pruning thresholds and allowing more iterations, SST* is observed to converge toward optimal trajectories in terms of path length and adherence to cost objectives. This evaluation confirms SST*'s ability to approach optimal solutions as computational resources and planning horizons are extended.
 
 ## 3 Methodology
 
 ### 3.1 Overview
 
-This section outlines the implementation and analysis of the Stable Sparse RRT* (SST*)algorithm in both two-dimensional and three-dimensional environments. The methodology is divided into two primary cases:
+This section outlines the implementation and analysis of the Stable Sparse RRT* (SST*) algorithm in both two-dimensional and three-dimensional environments. The methodology is divided into two primary cases:
 
-• Two-Dimensional Case: Incorporates obstacles and wind disturbances, analyzes various cost functions, and evaluates SST* performance without explicit goal sam pling.
+• Two-Dimensional Case: Incorporates obstacles and wind disturbances, analyzes various cost functions, and evaluates SST* performance without explicit goal sampling.
 
-• Three-Dimensional Case: Focuses on cost function analysis and assesses the asymp totic optimality of SST*.
+• Three-Dimensional Case: Focuses on cost function analysis and assesses the asymptotic optimality of SST*.
 
 ### 3.2 Algorithm: SST*
 
-Stable Sparse RRT* (SST*) is a sampling-based planner that can achieve asymptotic op timality while maintaining a sparse subset of nodes in the state space. It incrementally
+Stable Sparse RRT* (SST*) is a sampling-based planner that can achieve asymptotic optimality while maintaining a sparse subset of nodes in the state space. It incrementally explores by randomly sampling states, extending from promising nodes, and pruning suboptimal trajectories. By focusing on a smaller, well-chosen set of states, SST* can converge to high-quality solutions efficiently. 
 
-explores by randomly sampling states, extending from promising nodes, and pruning sub optimal trajectories. By focusing on a smaller, well-chosen set of states, SST* can converge to high-quality solutions efciently.
-
-In some analyses, I incorporate explicit goal sampling to guide SST* toward a known goal region. In others, I disable goal sampling entirely, relying solely on cost functions to lead the planner toward desirable trajectories. This dual approach allows me to compare the efectiveness of traditional goal-centric planning against purely cost-driven methods.Additionally, I showcase the potential of using this planner
+In some analyses, I incorporate explicit goal sampling to guide SST* toward a known goal region. In others, I disable goal sampling entirely, relying solely on cost functions to lead the planner toward desirable trajectories. This dual approach allows me to compare the effectiveness of traditional goal-centric planning against purely cost-driven methods. Additionally, I showcase the potential of using this planner.
 
 ### 3.3 Dynamics and Environment
+I model the glider's flight as a 6-DOF rigid-body system with nonlinear dynamics. The state includes position, orientation, linear velocities, and angular rates. Equations of motion include the unsteady aerodynamic forces and moments, gravitational acceleration, and moments of inertia. I integrate these dynamics using a 4th-order Runge-Kutta method.
 
-I model the glider’s fight as a 6-DOF rigid-body system with nonlinear dynamics. The state includes position, orientation, linear velocities, and angular rates. Equations of mo tion include the unsteady aerodynamic forces and moments, gravitational acceleration, and moments of inertia. I integrate these dynamics using a 4th-order Runge-Kutta method.
+The environment is a three-dimensional bounded space. Obstacles, if any, are represented as Axis-Aligned Bounding Boxes (AABBs). Collision checking is performed by interpolating along trajectory segments and testing for geometric intersections. A uniform wind in a specified region of the x-z plane can also be present, which changes the glider's relative airflow and hence the set of feasible trajectories.
 
-The environment is a three-dimensional bounded space.Obstacles, if any, are rep resented as Axis-Aligned Bounding Boxes (AABBs). Collision checking is performed by interpolating along trajectory segments and testing for geometric intersections. A uniform wind in a specifed region of the x-z plane can also be present, which changes the glider’s relative airfow and hence the set of feasible trajectories.
-
-Due to time and plotting constraints, I was only able to implement obstacles and wind disturbances in a 2D environment. Nonetheless, the code is set up to handle wind and obstacles in 3D.
+Due to time and plotting constraints, I was only able to implement obstacles and wind disturbances in a 2D environment. Nonetheless, the code is set up to handle wind and obstacles in 3D. 
 
 ### 3.4 Cost Functions
 
-I implemented various cost functions tailored to diferent planning objectives:
+I implemented various cost functions tailored to different planning objectives:
 
 • Goal-centric Cost: When goal sampling is active, this cost penalizes distance to the target region, guiding SST* toward achieving a known end state.
 
-• Range-centric Cost (No Explicit Goal): In analyses without goal sampling, I use a cost function that rewards forward progress (e.g., maximizing horizontal range).SST* then naturally discovers long-distance glide trajectories without explicit guid ance.
+• Range-centric Cost (No Explicit Goal): In analyses without goal sampling, I use a cost function that rewards forward progress (e.g., maximizing horizontal range). SST* then naturally discovers long-distance glide trajectories without explicit guidance.
 
-• Obstacle Penalties: Introduce penalties for trajectories passing near obstacles, en couraging safer, collision-free paths.
+• Obstacle Penalties: Introduce penalties for trajectories passing near obstacles, encouraging safer, collision-free paths.
 
-• Pitch-rate Penalties: Discourage high pitch-rate maneuvers, promoting smoother and more stable fight profles.
+• Pitch-rate Penalties: Discourage high pitch-rate maneuvers, promoting smoother and more stable flight profiles.
 
 • Altitude Cost: Penalizes excessive altitude loss, encouraging the glider to maintain higher altitudes.
 
-By selectively enabling or disabling goal sampling and tuning these cost functions, I can compare how SST* behaves under diferent guidance paradigms and environmental constraints.
+By selectively enabling or disabling goal sampling and tuning these cost functions, I can compare how SST* behaves under different guidance paradigms and environmental constraints.
 
 ### 3.5 Implementation Details
 
-This project is implemented solely in C++with no external motion planning or simula tion libraries. All functionalities are self-written , including the state-space representation,dynamics integration, sampling, collision checking, tree management, cost evaluation, and environment modeling. Highlights of the implementation include the following:
+This project is implemented solely in C++ with no external motion planning or simulation libraries. All functionalities are self-written , including the state-space representation, dynamics integration, sampling, collision checking, tree management, cost evaluation, and environment modeling. Highlights of the implementation include the following:
 
-• Class Design: The code is divided into multiple classes and header fles, each dedi cated to a specifc component of the planning pipeline. For instance:
+• Class Design: The code is divided into multiple classes and header files, each dedicated to a specific component of the planning pipeline. For instance:
 
-– Environment.h/cpp: Defnes the 3D bounded workspace, obstacles (AABBs),and wind felds. It also provides methods to sample random states and controls,as well as collision checks along interpolated trajectory segments.
+– Environment.h/cpp: Defines the 3D bounded workspace, obstacles (AABBs), and wind fields. It also provides methods to sample random states and controls, as well as collision checks along interpolated trajectory segments.
 
-– State.h/cpp and ControlSurfaces.h/cpp: Represent the glider’s continuous state and control inputs, keeping track of positions, velocities, angles, and control surface defections.
+– State.h/cpp and ControlSurfaces.h/cpp: Represent the glider’s continuous state and control inputs, keeping track of positions, velocities, angles, and control surface deflections.
 
-– Dynamics.h/cpp: Implements a 6-DOF rigid-body fight model using nonlinear aerodynamic equations. It includes a custom 4th-order Runge-Kutta integrator to propagate states, compute forces and moments, and apply them over a chosen time step.
+– Dynamics.h/cpp: Implements a 6-DOF rigid-body flight model using nonlinear aerodynamic equations. It includes a custom 4th-order Runge-Kutta integrator to propagate states, compute forces and moments, and apply them over a chosen time step.
 
-– Graph.h/cpp and Node.h: Manage the search tree structure. Nodes store states,controls, durations, and costs.The graph provides nearest-neighbor queries,node insertion, and rewiring functionalities.
+– Graph.h/cpp and Node.h: Manage the search tree structure. Nodes store states, controls, durations, and costs. The graph provides nearest-neighbor queries, node insertion, and rewiring functionalities.
 
-– Witness.h/cpp: Maintains a set of ”witness” nodes that help enforce sparsity.This ensures that SST* focuses on improving promising trajectories rather than redundantly exploring already covered regions of the state space.
+– Witness.h/cpp: Maintains a set of "witness" nodes that help enforce sparsity. This ensures that SST* focuses on improving promising trajectories rather than redundantly exploring already covered regions of the state space.
 
-• Sampling and Goal Biasing: State and control sampling routines are implemented directly in the Environment class, using internally defned random number generators and distributions. For experiments with a known goal, a subset of samples is biased toward the goal region. For cost-driven scenarios, the sampling remains uniform, and only the cost function guides the search toward optimal trajectories.
+• Sampling and Goal Biasing: State and control sampling routines are implemented directly in the \textit{Environment} class, using internally defined random number generators and distributions. For experiments with a known goal, a subset of samples is biased toward the goal region. For cost-driven scenarios, the sampling remains uniform, and only the cost function guides the search toward optimal trajectories.
 
-• Custom Cost Evaluation: The cost functions—goal distance, horizontal range,obstacle proximity, pitch-rate penalties, and altitude retention—are all computed di rectly in the code without external dependencies.Each cost metric is computed on-the-fy as states are generated and integrated. Adjusting the relative weights in the code allows quick experimentation with diferent planning objectives.
+• Custom Cost Evaluation: The cost functions—goal distance, horizontal range, obstacle proximity, pitch-rate penalties, and altitude retention—are all computed directly in the code without external dependencies. Each cost metric is computed on-the-fly as states are generated and integrated. Adjusting the relative weights in the code allows quick experimentation with different planning objectives.
 
-• Collision Checking and Interpolation: While this method is not the most so phisticated or computationally optimal—more advanced collision detection techniques could reduce the risk of missing narrow passages or small obstacles—it was chosen to simplify the implementation and reduce computational overhead.
+• Collision Checking and Interpolation: While this method is not the most sophisticated or computationally optimal—more advanced collision detection techniques could reduce the risk of missing narrow passages or small obstacles—it was chosen to simplify the implementation and reduce computational overhead.
 
-This bottom-up approach lets me achieve complete transparency, controllability, and fexibility in the planning process. It is easy to compare diferent modes of operation, such
-
-as goal-based versus purely cost-driven, by toggling fags and changing weight parameters.It also allows careful integration of wind felds and obstacles to test the planner’s robustness under various environmental conditions.
+This bottom-up approach lets me achieve complete transparency, controllability, and flexibility in the planning process. It is easy to compare different modes of operation, such as goal-based versus purely cost-driven, by toggling flags and changing weight parameters. It also allows careful integration of wind fields and obstacles to test the planner's robustness under various environmental conditions.
 
 ## 4 Results
 
 ### 4.1 Using SST* For Glide Range Optimization
 
-In these experiments, the maximum achievable glide range was determined iteratively.Starting from a chosen target x-position, I iteratively increased the goal distance and reran the sim ulation until the glider could no longer reach the assigned target. This process outlined the physical and dynamic limitations of the system.
+In these experiments, the maximum achievable glide range was determined iteratively. Starting from a chosen target x-position, I iteratively increased the goal distance and reran the simulation until the glider could no longer reach the assigned target. This process outlined the physical and dynamic limitations of the system.
 
-In Figure 1, the planner biases samples 5% of the time toward a goal set about 200m beyond this experimentally determined maximum glide range. In contrast, Figure 2 shows an example with no explicit goal sampling, relying solely on a cost function to guide the glider’s trajectory. Despite these difering approaches, the glider ends up reaching a similar fnal position in both cases. This outcome shows that a long, stable glide near the dynamical limit can be achieved either by incorporating sparse goal-directed sampling or by allowing SST* to naturally discover the trajectory through a carefully designed cost function alone.
+In Figure 1, the planner biases samples 5% of the time toward a goal set about 200m beyond this experimentally determined maximum glide range. In contrast, Figure 2 shows an example with no explicit goal sampling, relying solely on a cost function to guide the glider’s trajectory. Despite these differing approaches, the glider ends up reaching a similar final position in both cases. This outcome shows that a long, stable glide near the dynamical limit can be achieved either by incorporating sparse goal-directed sampling or by allowing SST* to naturally discover the trajectory through a carefully designed cost function alone.
 
 
 ![](https://web-api.textin.com/ocr_image/external/94d7822ad2dce628.jpg)
