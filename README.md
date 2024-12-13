@@ -106,7 +106,7 @@ In these experiments, the maximum achievable glide range was determined iterativ
 In Figure 1, the planner biases samples 5% of the time toward a goal set about 200m beyond this experimentally determined maximum glide range. In contrast, Figure 2 shows an example with no explicit goal sampling, relying solely on a cost function to guide the glider’s trajectory. Despite these differing approaches, the glider ends up reaching a similar final position in both cases. This outcome shows that a long, stable glide near the dynamical limit can be achieved either by incorporating sparse goal-directed sampling or by allowing SST* to naturally discover the trajectory through a carefully designed cost function alone.
 
 
-![]("Figures/More_ControlTrajectory1 (15).png")
+![](Figures/More_ControlTrajectory1 (15)(1).png)
 
 
 ![](https://web-api.textin.com/ocr_image/external/14d51fbc27e9d3c3.jpg)
