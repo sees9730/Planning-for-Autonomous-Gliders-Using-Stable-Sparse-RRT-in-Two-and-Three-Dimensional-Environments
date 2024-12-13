@@ -126,7 +126,7 @@ In these experiments, all previously defined cost functions (goal-centric, altit
 Figures 3–6 show the robustness of the selected weights of the cost function. Even as the environment becomes more complex, including the introduction of narrow passages and additional obstacles, SST* still identifies trajectories that reach the goal. The careful tuning of the cost weights ensures that the planner appropriately balances conflicting objectives—maintaining altitude, avoiding obstacles, minimizing pitch-rate excursions, and ultimately converging on the goal region—resulting in resilient performance under a variety of challenging scenarios.
 
 <p align="center">
-  <img src="Figures/More_ControlTrajectory (1).png"/>
+  <img src="Figures/More_ControlTrajectory(1).png"/>
 </p>
 
 Figure 3: SST* trajectory and elevator deflection over time, illustrating how balanced cost function weights enable goal attainment despite environmental challenges.
@@ -217,86 +217,81 @@ Pitch Rate Cost Function
 
 In scenarios that emphasize the minimization of pitch rate, the planner reduces abrupt changes in pitch, hence smoother trajectories. Even by constraining itself to gentler maneuvers, SST* still achieves successful goal attainment, demonstrating that stable and efficient flight profiles can be maintained while adhering to stricter pitch rate limits. By de-emphasizing or removing the pitch rate cost, the planner can leverage much more aggressive pitch adjustments in attempting to attain the goal. Comparing these results shows the flexibility of the cost framework: by tuning the pitch rate penalty we are able to trade rapid control authority for smoother flight—without sacrificing our ability to achieve mission objectives.
 
-![](https://web-api.textin.com/ocr_image/external/e2c4231c2a61492b.jpg)
+<p align="center">
+  <img src="Figures/More_ControlTrajectory1 (7)(1).png"/>
+</p>
 
 
-![](https://web-api.textin.com/ocr_image/external/dc09dfe5ca0931ad.jpg)
+Figure 14: SST* trajectory and elevator deflection over time with a pitch rate cost function active. Here, the planner restricts rapid pitch changes, resulting in a smoother flight path while still achieving the desired goal. In this case, the goal is x = 100m, z = 100m.
 
 
-![](https://web-api.textin.com/ocr_image/external/ffd50533689769dc.jpg)
-
-Figure 14: SST* trajectory and elevator defection over time with a pitch rate cost function active. Here, the planner restricts rapid pitch changes, resulting in a smoother fight path while still achieving the desired goal. In this case, the goal is x =100m,z=100m.
-
-
-![](https://web-api.textin.com/ocr_image/external/dcf963dbffd7822e.jpg)
+<p align="center">
+  <img src="Figures/More_ControlTrajectory1 (8)(1).png"/>
+</p>
 
 
-![](https://web-api.textin.com/ocr_image/external/7e84a278f4479e64.jpg)
+Figure 15: SST* trajectory and elevator deflection over time without a pitch rate cost. In the absence of pitch rate penalties, the glider executes more abrupt maneuvers to reach the goal. In this case, the goal is x = 100m, z = 100m.
 
 
-![](https://web-api.textin.com/ocr_image/external/7b745810c5443a4d.jpg)
+<p align="center">
+  <img src="Figures/More_ControlTrajectory1 (12)(1).png"/>
+</p>
 
-Figure 15: SST* trajectory and elevator defection over time without a pitch rate cost. In the absence of pitch rate penalties, the glider executes more abrupt maneuvers to reach the goal. In this case, the goal isx=100m,z=100m.
-
-
-![](https://web-api.textin.com/ocr_image/external/3e4c23e506796b09.jpg)
-
-
-![](https://web-api.textin.com/ocr_image/external/ceedffc0609181d0.jpg)
-
-
-![](https://web-api.textin.com/ocr_image/external/dfe09d0e3ce0a6e6.jpg)
-
-Figure 16: SST* trajectory and elevator defection over time with a pitch rate cost. The planner makes control adjustments, prioritizing smoother fight in the beginning over goal attainment. In this case, the goal isx=300m,z=0m
+Figure 16: SST* trajectory and elevator deflection over time with a pitch rate cost. The planner makes control adjustments, prioritizing smoother flight in the beginning over goal attainment. In this case, the goal is x = 300m, z = 0m
 
 Proving SST* Asymptotic Near-Optimality
+To empirically demonstrate the asymptotic approach of SST*’s to optimal solutions, I conducted a series of experiments focusing on a goal-centric cost function that penalizes distance to a specified target region. In each successive trial, I allowed SST* to run longer and systematically reduced the parameters deltaBN and deltaS of the SST* inner loop. By lowering these parameters, the pruning and binning criteria become tighter, and the planner explores the solution space in an increasingly finer grain, refining its search toward the goal.
 
-To empirically demonstrate the asymptotic approach of SST*’s to optimal solutions, I con ducted a series of experiments focusing on a goal-centric cost function that penalizes distance to a specifed target region. In each successive trial, I allowed SST* to run longer and sys tematically reduced the parameters δBN and δS of the SST* inner loop. By lowering these parameters, the pruning and binning criteria become tighter, and the planner explores the solution space in an increasingly fner grain, refning its search toward the goal.
+Under these stricter conditions, the trajectories from SST* indeed kept improving with more and more iterations of the algorithm, converging to paths that were better in terms of path length. Over time, the planner would prune suboptimal branches and only retain and refine the most promising trajectories. See Figures 17-19 for reference.
 
-Under these stricter conditions, the trajectories from SST* indeed kept improving with more and more iterations of the algorithm, converging to paths that were better in terms of path length. Over time, the planner would prune suboptimal branches and only retain and refne the most promising trajectories. See Figures 17-19 for reference.
+<p align="center">
+  <img src="Figures/tra_3.png"/>
+</p>
+<p align="center">
+  <img src="Figures/xy_3.png"/>
+</p>
+<p align="center">
+  <img src="Figures/xz_3.png"/>
+</p>
 
-
-![](https://web-api.textin.com/ocr_image/external/ca4e7fe92944eecf.jpg)
-
-
-![](https://web-api.textin.com/ocr_image/external/37ba211a134a30a8.jpg)
-
-
-![](https://web-api.textin.com/ocr_image/external/d8b8800b5a14a7a6.jpg)
-
-Figure 17: SST* 3D trajectory, x-y, and x-z trajectory with a control space of aileron,elevator, and rudder. The number of SST* iterations is 3. The goal is x =200, y = -50. The goal region is a 10m radius around the goal. The cost function is designed to reduce the distance to the goal, prioritizing a straight-line path to goal.
-
-
-![](https://web-api.textin.com/ocr_image/external/1516092857a10e4a.jpg)
+Figure 17: SST* 3D trajectory, x-y, and x-z trajectory with a control space of aileron, elevator, and rudder. **The number of SST* iterations is 3**. The goal is x = 200, y = -50. The goal region is a 10m radius around the goal. The cost function is designed to reduce the distance to the goal, prioritizing a straight-line path to goal.
 
 
-![](https://web-api.textin.com/ocr_image/external/890972cea032d52e.jpg)
+<p align="center">
+  <img src="Figures/tra_30.png"/>
+</p>
+<p align="center">
+  <img src="Figures/xy_30.png"/>
+</p>
+<p align="center">
+  <img src="Figures/xz_30.png"/>
+</p>
 
+Figure 18: SST* 3D trajectory, x-y, and x-z trajectory with a control space of aileron, elevator, and rudder. **The number of SST* iterations is 30**. The goal is x = 200, y = -50. The goal region is a 10m radius around the goal. The cost function is designed to reduce the distance to the goal, prioritizing a straight-line path to goal.
 
-![](https://web-api.textin.com/ocr_image/external/2fe7d5a64db37a84.jpg)
+<p align="center">
+  <img src="Figures/tra_300.png"/>
+</p>
+<p align="center">
+  <img src="Figures/xy_300.png"/>
+</p>
+<p align="center">
+  <img src="Figures/xz_300.png"/>
+</p>
 
-Figure 18: SST* 3D trajectory, x-y, and x-z trajectory with a control space of aileron,elevator, and rudder. The number of SST* iterations is 30. The goal is x = 200, y = -50. The goal region is a 10m radius around the goal. The cost function is designed to reduce the distance to the goal, prioritizing a straight-line path to goal.
-
-
-![](https://web-api.textin.com/ocr_image/external/0b260608f556ed57.jpg)
-
-
-![](https://web-api.textin.com/ocr_image/external/b65dfcd4cb8adada.jpg)
-
-
-![](https://web-api.textin.com/ocr_image/external/50dc733341275811.jpg)
-
-Figure 19: SST* 3D trajectory, x-y, and x-z trajectory with a control space of aileron,elevator, and rudder. The number of SST* iterations is 300. The goal is x=200,y = -50. The goal region is a 10m radius around the goal. The cost function is designed to reduce the distance to the goal, prioritizing a straight-line path to goal.
+Figure 19: SST* 3D trajectory, x-y, and x-z trajectory with a control space of aileron, elevator, and rudder. **The number of SST* iterations is 300**. The goal is x = 200, y = -50. The goal region is a 10m radius around the goal. The cost function is designed to reduce the distance to the goal, prioritizing a straight-line path to goal.
 
 Cost Function Analysis in 3D
 
-I conducted a quick study on how the planner handles a rotation rate cost function in three dimensions. Figure 20 show the efectiveness of this cost function by comparing a plan with and without the cost function.
+I conducted a quick study on how the planner handles a rotation rate cost function in three dimensions. Figure 20 show the effectiveness of this cost function by comparing a plan with and without the cost function.  
 
+<p align="center">
+  <img src="Figures/just_distance.png"/>
+</p>
 
-![](https://web-api.textin.com/ocr_image/external/ef3311b91e180d07.jpg)
-
-
-![](https://web-api.textin.com/ocr_image/external/00bfae48a63a7c34.jpg)
+<p align="center">
+  <img src="Figures/output2.png"/>
+</p>
 
 Figure 20: SST* 3D trajectory with a control space of aileron, elevator, and rudder. The image on the left shows the case where the planner has only a goal based cost function. The image on the right (with a smoother path) shows the case where the planner has a goal based cost function as well as a rotation rate cost based function.
 
