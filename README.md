@@ -297,43 +297,41 @@ Figure 20: SST* 3D trajectory with a control space of aileron, elevator, and rud
 
 ## 5 Conclusion
 
-This study has comprehensively evaluated the application of the Stable Sparse RRT* (SST*)algorithm for planning dynamically feasible trajectories of a glider in both two-dimensional (2D) and three-dimensional (3D) environments. By systematically incorporating obstacles and wind disturbances in the 2D case and extending the analysis to a more complex 3D spatial domain, the research underscores the versatility and robustness of SST* in diverse planning scenarios.
+This study has comprehensively evaluated the application of the Stable Sparse RRT* (SST*) algorithm for planning dynamically feasible trajectories of a glider in both two-dimensional (2D) and three-dimensional (3D) environments. By systematically incorporating obstacles and wind disturbances in the 2D case and extending the analysis to a more complex 3D spatial domain, the research underscores the versatility and robustness of SST* in diverse planning scenarios.
 
 ### 5.1 Key Findings
 
 #### Two-Dimensional Environment
 
-In the two-dimensional analysis, SST* was tasked with navigating a glider through en vironments populated with obstacles and subjected to uniform wind disturbances.The implementation demonstrated that:
+In the two-dimensional analysis, SST* was tasked with navigating a glider through environments populated with obstacles and subjected to uniform wind disturbances. The implementation demonstrated that:
 
-• Cost Function Efectiveness: By analyzing a variety of cost functions, including range-centric, obstacle penalties, pitch-rate penalties, and altitude costs, SST* efec tively guided the glider to maximize glide range and maintain stability without relying on explicit goal sampling.
+• Cost Function Effectiveness: By analyzing a variety of cost functions, including range-centric, obstacle penalties, pitch-rate penalties, and altitude costs, SST* effectively guided the glider to maximize glide range and maintain stability without relying on explicit goal sampling.
 
-• Autonomous Goal Discovery: The evaluation without explicit goal sampling re vealed that SST* can autonomously discover optimal trajectories solely based on cost-based guidance. This capability highlights SST$^ { * } S$potential to operate efciently in scenarios where goal states are undefned or dynamic.
+• Autonomous Goal Discovery: The evaluation without explicit goal sampling revealed that SST* can autonomously discover optimal trajectories solely based on cost-based guidance. This capability highlights SST*’s potential to operate efficiently in scenarios where goal states are undefined or dynamic.
 
-• Obstacle Avoidance and Stability: The incorporation of obstacle proximity and pitch-rate penalties ensured collision-free paths and smooth fight profles, demon strating SST$^ { 7 米 } S$ability to balance multiple conficting objectives efectively.
+• Obstacle Avoidance and Stability: The incorporation of obstacle proximity and pitch-rate penalties ensured collision-free paths and smooth flight profiles, demonstrating SST*’s ability to balance multiple conflicting objectives effectively.
 
 #### Three-Dimensional Environment
 
-Extending the analysis to a three-dimensional environment introduced additional complexi ties, including increased state dimensionality and the necessity to account for yaw dynamics.The fndings in this domain include:
+Extending the analysis to a three-dimensional environment introduced additional complexities, including increased state dimensionality and the necessity to account for yaw dynamics. The findings in this domain include:
 
-• Enhanced Optimality: Through a series of iterative experiments, SST* exhibited convergence toward optimal trajectories in 3D space as the number of iterations in creased and pruning thresholds were refned. This confrms the algorithm’s asymptotic optimality in higher-dimensional state spaces.
+• Enhanced Optimality: Through a series of iterative experiments, SST* exhibited convergence toward optimal trajectories in 3D space as the number of iterations increased and pruning thresholds were refined. This confirms the algorithm’s asymptotic optimality in higher-dimensional state spaces.
 
-• Comprehensive Cost Function Analysis: The detailed examination of cost func tions in 3D, encompassing goal-centric, range-centric, obstacle penalties, pitch-rate and yaw-rate penalties, and altitude and heading costs, provided deeper insights into SST*’s trajectory optimization capabilities. The ability to fne-tune these cost func tions allowed for tailored trajectory planning that meets specifc mission objectives.
+• Comprehensive Cost Function Analysis: The detailed examination of cost functions in 3D, encompassing goal-centric, range-centric, obstacle penalties, pitch-rate and yaw-rate penalties, and altitude and heading costs, provided deeper insights into SST*’s trajectory optimization capabilities. The ability to fine-tune these cost functions allowed for tailored trajectory planning that meets specific mission objectives.
 
-• Robustness to Environmental Variations: The planner maintained optimal per formance despite the increased complexity of the 3D environment, including navi-
-
-gating around obstacles and adjusting to dynamic wind conditions. This robustness underscores SST*’s applicability to real-world, multi-dimensional planning problems.
+• Robustness to Environmental Variations: The planner maintained optimal performance despite the increased complexity of the 3D environment, including navigating around obstacles and adjusting to dynamic wind conditions. This robustness underscores SST*’s applicability to real-world, multi-dimensional planning problems.
 
 ### 5.2 Implications
 
-The successful implementation and evaluation of SST* in both 2D and 3D environments demonstrate its strong potential as an efcient and adaptable motion planning algorithm for autonomous glider navigation. The ability to operate without explicit goal sampling, relying instead on carefully designed cost functions, ofers signifcant fexibility in scenarios where goal states are not well-defned or are subject to change. Additionally, SST*’s asymptotic optimality in 3D spaces positions it as a viable solution for complex spatial planning tasks beyond the scope of traditional RRT-based planners.
+The successful implementation and evaluation of SST* in both 2D and 3D environments demonstrate its strong potential as an efficient and adaptable motion planning algorithm for autonomous glider navigation. The ability to operate without explicit goal sampling, relying instead on carefully designed cost functions, offers significant flexibility in scenarios where goal states are not well-defined or are subject to change. Additionally, SST*’s asymptotic optimality in 3D spaces positions it as a viable solution for complex spatial planning tasks beyond the scope of traditional RRT-based planners.
 
 ### 5.3 Conclusion
 
-In summary, this report has demonstrated that the Stable Sparse RRT* algorithm is a pow erful and fexible tool for autonomous glider trajectory planning in both two-dimensional and three-dimensional environments. Its ability to efectively navigate complex environ ments, optimize trajectories based on diverse cost functions, and approach asymptotic op timality in higher-dimensional spaces highlights its suitability for a wide range of motion planning applications.
+In summary, this report has demonstrated that the Stable Sparse RRT* algorithm is a powerful and flexible tool for autonomous glider trajectory planning in both two-dimensional and three-dimensional environments. Its ability to effectively navigate complex environments, optimize trajectories based on diverse cost functions, and approach asymptotic optimality in higher-dimensional spaces highlights its suitability for a wide range of motion planning applications.
 
 ### Acknowledgments
 
-This is my bibliography, I really could not fgure out why my .bib wasn’t transferring.
+This is my bibliography, I really could not figure out why my .bib wasn’t transferring.
 
 • Paper ”Asymptotically Optimal Sampling-based Kinodynamic Planning”.
 
@@ -341,7 +339,7 @@ This is my bibliography, I really could not fgure out why my .bib wasn’t trans
 
 • ChatGPT for helping me code and write the paper.
 
-• Professor Lahijanian, thanks for the lectures notes and knowledge.
+• Professor Lahijanian, thanks for the lecture notes and knowledge.
 
 • Thanks to my girlfriend for listening to all my rants about my code not working.
 
