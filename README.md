@@ -75,7 +75,7 @@ By selectively enabling or disabling goal sampling and tuning these cost functio
 
 ### 3.5 Implementation Details
 
-This project is implemented solely in C++ with no external motion planning or simulation libraries. All functionalities are self-written , including the state-space representation, dynamics integration, sampling, collision checking, tree management, cost evaluation, and environment modeling. Highlights of the implementation include the following:
+This project is implemented solely in C++ with no external motion planning or simulation libraries. All functionalities are self-written, including the state-space representation, dynamics integration, sampling, collision checking, tree management, cost evaluation, and environment modeling. Highlights of the implementation include the following:
 
 • Class Design: The code is divided into multiple classes and header files, each dedicated to a specific component of the planning pipeline. For instance:
 
@@ -121,137 +121,101 @@ Figure 2: SST* Trajectory and elevator deflection over time without any goal sam
 
 ### 4.2 Incorporation of Obstacle Avoidance
 
-In these experiments, all previously defned cost functions (goal-centric, altitude, obstacle avoidance, and pitch-rate penalties) were active, and a known goal state was consistently sampled throughout the planning process.With a persistent defnition of the goal and the incorporation of obstacle constraints, the planner keeps seeking to approach the target,taking into consideration altered environmental conditions.
+In these experiments, all previously defined cost functions (goal-centric, altitude, obstacle avoidance, and pitch-rate penalties) were active, and a known goal state was consistently sampled throughout the planning process. With a persistent definition of the goal and the incorporation of obstacle constraints, the planner keeps seeking to approach the target, taking into consideration altered environmental conditions.
 
-Figures 3–6 show the robustness of the selected weights of the cost function.Even as the environment becomes more complex, including the introduction of narrow passages and additional obstacles, SST* still identifes trajectories that reach the goal. The care ful tuning of the cost weights ensures that the planner appropriately balances conficting objectives—maintaining altitude, avoiding obstacles, minimizing pitch-rate excursions, and ultimately converging on the goal region—resulting in resilient performance under a variety of challenging scenarios.
+Figures 3–6 show the robustness of the selected weights of the cost function. Even as the environment becomes more complex, including the introduction of narrow passages and additional obstacles, SST* still identifies trajectories that reach the goal. The careful tuning of the cost weights ensures that the planner appropriately balances conflicting objectives—maintaining altitude, avoiding obstacles, minimizing pitch-rate excursions, and ultimately converging on the goal region—resulting in resilient performance under a variety of challenging scenarios.
 
+<p align="center">
+  <img src="Figures/More_ControlTrajectory (1).png"/>
+</p>
 
-![](https://web-api.textin.com/ocr_image/external/aa547df8cdb08030.jpg)
-
-
-![](https://web-api.textin.com/ocr_image/external/ecd3d975572926d1.jpg)
-
-Figure 3: SST* trajectory and elevator defection over time, illustrating how balanced cost function weights enable goal attainment despite environmental challenges.
+Figure 3: SST* trajectory and elevator deflection over time, illustrating how balanced cost function weights enable goal attainment despite environmental challenges.
 
 
-![](https://web-api.textin.com/ocr_image/external/ea7a51e948d6fdbb.jpg)
+<p align="center">
+  <img src="Figures/More_ControlTrajectory1(1).png"/>
+</p>
+
+Figure 4: SST* trajectory and elevator deflection over time, illustrating how balanced cost function weights enable goal attainment despite environmental challenges.
+
+<p align="center">
+  <img src="Figures/More_ControlTrajectory1 (2)(1).png"/>
+</p>
+
+Figure 5: SST* trajectory and elevator deflection over time, illustrating how balanced cost function weights enable goal attainment despite environmental challenges.
+
+<p align="center">
+  <img src="Figures/More_ControlTrajectory1 (3)(1).png"/>
+</p>
+
+Figure 6: SST* trajectory and elevator deflection over time, illustrating how balanced cost function weights enable goal attainment despite environmental challenges.
+
+### 4.3 Influence of Wind Disturbances
+
+In the following experiments, Figures 7–11 introduce a steady wind field into the environment to assess how well the planner can adapt under changing conditions of flight. With the same set of cost functions active-goal-centric, altitude, obstacle avoidance, and pitch-rate penalties-the presence of wind challenges efficient trajectory maintenance by the glider towards the target.
+
+For that, the relative weights in the cost functions were a little adjusted, so the planner keeps the altitude and pitch behavior when facing head- and tailwind. The figures illustrate, next to the resulting trajectories, how the elevator deflection-an input directly affecting the glider's pitch angle-varies over time. By analyzing these changes in pitch, we see how the planner makes up for environmental disturbances with carefully weighted costs that continue to tune its control inputs.
+
+Even with a significant 20 m/s headwind or tailwind, SST* converges on feasible solutions that reach the goal. This demonstrates that the planner can successfully counteract adverse conditions and preserve near-optimal performance, all while adhering to strict cost-based criteria for altitude, obstacle avoidance, and pitch-rate stability.
+
+<p align="center">
+  <img src="Figures/More_ControlTrajectory1 (9)(1).png"/>
+</p>
+
+Figure 7: SST* Trajectory and Elevator deflection over time. No wind is added in this simulation.
 
 
-![](https://web-api.textin.com/ocr_image/external/71c550e40a254f37.jpg)
-
-Figure 4: SST* trajectory and elevator defection over time, illustrating how balanced cost function weights enable goal attainment despite environmental challenges.
-
-
-![](https://web-api.textin.com/ocr_image/external/42c5424264c42b4c.jpg)
+<p align="center">
+  <img src="Figures/More_ControlTrajectory1 (10)(1).png"/>
+</p>
 
 
-![](https://web-api.textin.com/ocr_image/external/0ffdd974d283e25c.jpg)
-
-Figure 5: SST* trajectory and elevator defection over time, illustrating how balanced cost function weights enable goal attainment despite environmental challenges.
+Figure 8: SST* Trajectory and Elevator deflection over time. There is a 20m/s headwind in this simulation.
 
 
-![](https://web-api.textin.com/ocr_image/external/48bdf5b0af398fe9.jpg)
+<p align="center">
+  <img src="Figures/More_ControlTrajectory1 (11)(1).png"/>
+</p>
+
+Figure 9: SST* Trajectory and Elevator deflection over time. There is a 20m/s tailwind in this simulation.
+
+<p align="center">
+  <img src="Figures/More_ControlTrajectory1 (5)(1).png"/>
+</p>
+
+Figure 10: SST* Trajectory and Elevator deflection over time. There is a 4m/s upward wind component in this simulation.
 
 
-![](https://web-api.textin.com/ocr_image/external/0af8af3f93a99daf.jpg)
-
-Figure 6: SST* trajectory and elevator defection over time, illustrating how balanced cost function weights enable goal attainment despite environmental challenges.
-
-### 4.3 Infuence of Wind Disturbances
-
-In the following experiments, Figures 7–11 introduce a steady wind feld into the environ ment to assess how well the planner can adapt under changing conditions of fight. With
-
-the same set of cost functions active-goal-centric, altitude, obstacle avoidance, and pitch rate penalties-the presence of wind challenges efcient trajectory maintenance by the glider towards the target.
-
-For that, the relative weights in the cost functions were a little adjusted, so the planner keeps the altitude and pitch behavior when facing head- and tailwind. The fgures illustrate,next to the resulting trajectories, how the elevator defection-an input directly afecting the glider’s pitch angle-varies over time. By analyzing these changes in pitch, we see how the planner makes up for environmental disturbances with carefully weighted costs that continue to tune its control inputs.
-
-Even with a signifcant 20 m/s headwind or tailwind, SST* converges on feasible solu tions that reach the goal. This demonstrates that the planner can successfully counteract adverse conditions and preserve near-optimal performance, all while adhering to strict cost based criteria for altitude, obstacle avoidance, and pitch-rate stability.
-
-
-![](https://web-api.textin.com/ocr_image/external/c7844252a6c685ea.jpg)
-
-
-![](https://web-api.textin.com/ocr_image/external/8753e296e833c426.jpg)
-
-
-![](https://web-api.textin.com/ocr_image/external/09b239b4a120a61b.jpg)
-
-Figure 7: SST* Trajectory and Elevator defection over time. No wind is added in this simulation.
-
-
-![](https://web-api.textin.com/ocr_image/external/6476fb45638ca6b9.jpg)
-
-
-![](https://web-api.textin.com/ocr_image/external/4d73ba946843f6fc.jpg)
-
-
-![](https://web-api.textin.com/ocr_image/external/f4e36d18dd0ac064.jpg)
-
-Figure 8: SST* Trajectory and Elevator defection over time. There is a 20m/s headwind in this simulation.
-
-
-![](https://web-api.textin.com/ocr_image/external/1bd52b84d7e79f29.jpg)
-
-
-![](https://web-api.textin.com/ocr_image/external/a8d40564d3e6dff0.jpg)
-
-
-![](https://web-api.textin.com/ocr_image/external/b9d8dc8c2d97cc0b.jpg)
-
-Figure 9: SST* Trajectory and Elevator defection over time. There is a 20m/s tailwind in this simulation.
-
-
-![](https://web-api.textin.com/ocr_image/external/292d625acaaf7586.jpg)
-
-
-![](https://web-api.textin.com/ocr_image/external/7f72a2511ce4ee63.jpg)
-
-<!-- -0.5  -->
-![](https://web-api.textin.com/ocr_image/external/7fcba9cff77eaff3.jpg)
-
-Figure 10: SST* Trajectory and Elevator defection over time. There is a 4m/s wind com ponent in this simulation.
-
-
-![](https://web-api.textin.com/ocr_image/external/19cd80a320199d20.jpg)
-
-
-![](https://web-api.textin.com/ocr_image/external/6b1fd14051c7e167.jpg)
-
-
-![](https://web-api.textin.com/ocr_image/external/ef38a1d8d14470a7.jpg)
+<p align="center">
+  <img src="Figures/More_ControlTrajectory1 (6)(1).png"/>
+</p>
 
 Figure 11: SST* Trajectory and Elevator defection over time. There is a 4m/s upward wind component in this simulation.
 
-### 4.4 Exploring Diferent Cost Functions for SST*
+### 4.4 Exploring Different Cost Functions for SST*
 
-In these experiments, I investigate how fne-tuning of individual cost functions infuences the planner’s behavior under varying conditions. By putting selective emphasis on diferent
-
-aspects, for instance, obstacle avoidance or pitch rate minimization, SST* can change the trajectory and control inputs it provides to meet the desired objectives.
+In these experiments, I investigate how fine-tuning of individual cost functions influences the planner’s behavior under varying conditions. By putting selective emphasis on different aspects, for instance, obstacle avoidance or pitch rate minimization, SST* can change the trajectory and control inputs it provides to meet the desired objectives.
 
 Obstacle Proximity Cost Function
 
-In fact, with the obstacle proximity cost activated, there is a much stronger trend in control input adjustment by the glider when it approaches a dangerous region. As soon as the planner recognizes that the trajectory has brought the aircraft too close to an obstacle, its response becomes a rapid defection of the elevator with a corresponding deviation of the fight path. These sharp turns allow the glider to steer well away from obstacles while making headway toward the goal. The trajectories obtained in this case -as illustrated in Figures 12-13- reveal that the inclusion of this cost term favors dynamic avoidance maneuvers.
+In fact, with the obstacle proximity cost activated, there is a much stronger trend in control input adjustment by the glider when it approaches a dangerous region. As soon as the planner recognizes that the trajectory has brought the aircraft too close to an obstacle, its response becomes a rapid deflection of the elevator with a corresponding deviation of the flight path. These sharp turns allow the glider to steer well away from obstacles while making headway toward the goal. The trajectories obtained in this case -as illustrated in Figures 12-13- reveal that the inclusion of this cost term favors dynamic avoidance maneuvers.
 
 
-![](https://web-api.textin.com/ocr_image/external/1fb5a65ad9030567.jpg)
+<p align="center">
+  <img src="Figures/More_ControlTrajectory1 (13)(1).png"/>
+</p>
 
+Figure 12: SST* trajectory and elevator deflection over time, illustrating how the planner responds when approaching obstacles. By incorporating an obstacle proximity cost, the algorithm adjusts the glider’s flight path to maintain a safe distance.
 
-![](https://web-api.textin.com/ocr_image/external/0a9fe085d7354dd9.jpg)
+<p align="center">
+  <img src="Figures/More_ControlTrajectory1 (14)(1).png"/>
+</p>
 
-Figure 12: SST* trajectory and elevator defection over time, illustrating how the planner responds when approaching obstacles. By incorporating an obstacle proximity cost, the algorithm adjusts the glider’s fight path to maintain a safe distance.
-
-
-![](https://web-api.textin.com/ocr_image/external/1bad00cb562c6e26.jpg)
-
-
-![](https://web-api.textin.com/ocr_image/external/08c5930270453302.jpg)
-
-Figure 13: SST* trajectory and elevator defection over time, illustrating how the planner responds when approaching obstacles. By incorporating an obstacle proximity cost, the algorithm adjusts the glider’s fight path to maintain a safe distance.
+Figure 13: SST* trajectory and elevator deflection over time, illustrating how the planner responds when approaching obstacles. By incorporating an obstacle proximity cost, the algorithm adjusts the glider’s flight path to maintain a safe distance.
 
 Pitch Rate Cost Function
 
-In scenarios that emphasize the minimization of pitch rate, the planner reduces abrupt changes in pitch, hence smoother trajectories. Even by constraining itself to gentler ma neuvers, SST* still achieves successful goal attainment, demonstrating that stable and ef fcient fight profles can be maintained while adhering to stricter pitch rate limits.By de-emphasizing or removing the pitch rate cost, the planner can leverage much more ag gressive pitch adjustments in attempting to attain the goal. Comparing these results shows the fexibility of the cost framework: by tuning the pitch rate penalty we are able to trade rapid control authority for smoother fight—without sacrifcing our ability to achieve mis sion objectives.
-
+In scenarios that emphasize the minimization of pitch rate, the planner reduces abrupt changes in pitch, hence smoother trajectories. Even by constraining itself to gentler maneuvers, SST* still achieves successful goal attainment, demonstrating that stable and efficient flight profiles can be maintained while adhering to stricter pitch rate limits. By de-emphasizing or removing the pitch rate cost, the planner can leverage much more aggressive pitch adjustments in attempting to attain the goal. Comparing these results shows the flexibility of the cost framework: by tuning the pitch rate penalty we are able to trade rapid control authority for smoother flight—without sacrificing our ability to achieve mission objectives.
 
 ![](https://web-api.textin.com/ocr_image/external/e2c4231c2a61492b.jpg)
 
