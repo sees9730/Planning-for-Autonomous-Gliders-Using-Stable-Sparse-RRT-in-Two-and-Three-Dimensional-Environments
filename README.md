@@ -107,7 +107,9 @@ In Figure 1, the planner biases samples 5% of the time toward a goal set about 2
 
 
 ![](Figures/More_ControlTrajectory1 (15)(1).png)
-
+<p align="center">
+  <img src="Figures/More_ControlTrajectory1 (15)(1).png"/>
+</p>
 
 ![](https://web-api.textin.com/ocr_image/external/14d51fbc27e9d3c3.jpg)
 
